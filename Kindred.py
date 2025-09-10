@@ -249,14 +249,22 @@ browser.find_element_by_xpath("//button[@type='submit']").click()
 WebDriverWait(browser, 10).until(EC.url_contains(("https://discord.com/channels/")))
 
 
-ch_url = f"https://discord.com/channels/{server}/{channel}"
+# Discord server and channel configuration - replace with your actual values
+server_id = os.getenv('DISCORD_SERVER_ID', 'your_server_id_here')
+channel_id = os.getenv('DISCORD_CHANNEL_ID', 'your_channel_id_here')
+
+ch_url = f"https://discord.com/channels/{server_id}/{channel_id}"
 browser.get(ch_url)
 
 WebDriverWait(browser, 20).until(EC.presence_of_element_located((By.XPATH, "//main[@class='chatContent-a9vAAp']")))
 
-
-
-follower = TD_Client("follower_access_token", "follower_account_id", "follower_consumer_key", "follower_first_token_info") 
+# TD Ameritrade client configuration - replace with your actual credentials
+follower = TD_Client(
+    os.getenv('TD_ACCESS_TOKEN', 'your_access_token_here'),
+    os.getenv('TD_ACCOUNT_ID', 'your_account_id_here'), 
+    os.getenv('TD_CONSUMER_KEY', 'your_consumer_key_here'),
+    os.getenv('TD_REFRESH_TOKEN', 'your_refresh_token_here')
+)
 
 
 

@@ -1,6 +1,6 @@
 import requests
 
-class TdApi:
+class TD_Client:
     def __init__(self, access_token, account_id, consumer_key, first_token_info):
         self.access_token = access_token
         self.account_id = account_id

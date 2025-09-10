@@ -1,13 +1,16 @@
+import os
 import discord
 from discord.ext import commands
 from Kindred import kindred_task
 
 print("-"*10, "The Program starts...", "-"*10)
 
+# Bot configuration
 command_prefix = ["."]  # ['!','?','.','%']
 client = commands.Bot(command_prefix=command_prefix)
 
-noti_ch = "Discord Channel ID" 
+# Discord notification channel ID - set via environment variable
+noti_ch = int(os.getenv('DISCORD_NOTIFICATION_CHANNEL_ID', '0'))
 
 @client.event
 async def on_ready():
@@ -19,4 +22,9 @@ async def on_ready():
 
 client.loop.create_task(kindred_task(client, noti_ch))
 
-client.run("DISCORD_BOT_TOKEN")
+# Start the bot with token from environment variable
+discord_token = os.getenv('DISCORD_BOT_TOKEN')
+if not discord_token:
+    raise ValueError("DISCORD_BOT_TOKEN environment variable not set")
+
+client.run(discord_token)
