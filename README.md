@@ -42,7 +42,7 @@ This would:
 - Python 3.8+
 - TD Ameritrade brokerage account with API access
 - Discord bot token and server access
-- Chrome browser (for Selenium WebDriver)
+- Chrome browser installed (ChromeDriver is automatically managed)
 
 ## Installation
 
@@ -57,10 +57,7 @@ This would:
    pip install -r requirements.txt
    ```
 
-3. **Download ChromeDriver**:
-   - Download from [ChromeDriver](https://chromedriver.chromium.org/)
-   - Create a `driver/` directory in the project root
-   - Place `chromedriver.exe` (Windows) or `chromedriver` (Mac/Linux) in the `driver/` folder
+   **Note**: ChromeDriver is automatically downloaded and managed by Selenium Manager. No manual setup required!
 
 ## Configuration
 
@@ -161,8 +158,6 @@ copy-trading/
 ├── .env                 # Environment variables (not committed)
 ├── .env.example         # Environment variables template
 ├── .gitignore          # Git ignore patterns
-├── driver/             # ChromeDriver location
-│   └── chromedriver.exe
 └── README.md           # This file
 ```
 

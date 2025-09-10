@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -230,21 +231,22 @@ def copy_option(msg, user):
 
 
 chrome_options = Options()
-chrome_options.add_argument("--headless")
-browser = webdriver.Chrome("./driver/chromedriver.exe", chrome_options=chrome_options)
-if getattr(sys, 'frozen', False):
-    chromedriver_path = os.path.join(sys._MEIPASS, "chromedriver.exe")
-    browser = webdriver.Chrome(chromedriver_path)
-else:
-    browser = webdriver.Chrome("./driver/chromedriver.exe")
+# Prefer the new headless mode where available
+chrome_options.add_argument("--headless=new")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-dev-shm-usage")
+
+# Use Selenium Manager to handle the correct ChromeDriver automatically across OSes
+# Do not pass an explicit driver path; Selenium will download/manage the driver.
+browser = webdriver.Chrome(options=chrome_options)
 
 url = "https://discord.com/login"
 browser.get(url)
 
-browser.find_element_by_name("email").send_keys(email)
-browser.find_element_by_name("password").send_keys(password)
+browser.find_element(By.NAME, "email").send_keys(email)
+browser.find_element(By.NAME, "password").send_keys(password)
 
-browser.find_element_by_xpath("//button[@type='submit']").click()
+browser.find_element(By.XPATH, "//button[@type='submit']").click()
 
 WebDriverWait(browser, 10).until(EC.url_contains(("https://discord.com/channels/")))
 
